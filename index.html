@@ -62,7 +62,7 @@
 </div></div>
 <script>
 (() => {
-  const BUILD_VERSION = "v2.4";   // ship-it verify anchor — bump every build
+  const BUILD_VERSION = "v2.5";   // ship-it verify anchor — bump every build
   try{console.log('No Civ, Just Deer '+BUILD_VERSION);
     const _cr=document.querySelector('.credits');if(_cr)_cr.insertAdjacentHTML('beforeend',' <span style="opacity:.7;">· '+BUILD_VERSION+'</span>');}catch(e){}
   const cv=document.getElementById('stage'),ctx=cv.getContext('2d');
@@ -494,6 +494,7 @@
     const img=HIMG[hst]||HIMG.idle,faceLeft=(human.dirx||0)<-0.05;
     if(img&&img.complete&&img.naturalHeight){const H=76,W=H*img.naturalWidth/img.naturalHeight,fy=H*200/210;
       ctx.save();ctx.translate(s.x,s.y);if(faceLeft)ctx.scale(-1,1);ctx.drawImage(img,-W/2,-fy,W,H);ctx.restore();}
+    else{ctx.save();ctx.translate(s.x,s.y-16);ctx.fillStyle='#5c6b3f';ctx.fillRect(-5,-8,10,18);ctx.fillStyle='#e9c79a';ctx.beginPath();ctx.arc(0,-12,5,0,6.28);ctx.fill();ctx.fillStyle='#3f4a2a';ctx.fillRect(-7,-16,14,3);ctx.restore();}
     if(human.camping){ctx.font='13px serif';ctx.textAlign='center';ctx.fillText('🏕',s.x,s.y-66);}}
   function edgeArrow(){if(phase==='none'||!started)return;let dir;if(phase==='warning')dir=DIRS[warnDir];else if(human)dir=[human.dirx,human.diry];else return;
     const wv=iso(dir[0]||0,dir[1]||0);const a=Math.atan2(wv.y,wv.x);const r=Math.min(W,H)*0.38,ax=W/2+Math.cos(a)*r,ay=H/2+Math.sin(a)*r,pulse=0.6+0.4*Math.sin(performance.now()/200);
