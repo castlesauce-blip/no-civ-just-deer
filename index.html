@@ -62,6 +62,9 @@
 </div></div>
 <script>
 (() => {
+  const BUILD_VERSION = "v2.3";   // ship-it verify anchor — bump every build
+  try{console.log('No Civ, Just Deer '+BUILD_VERSION);
+    const _cr=document.querySelector('.credits');if(_cr)_cr.insertAdjacentHTML('beforeend',' <span style="opacity:.7;">· '+BUILD_VERSION+'</span>');}catch(e){}
   const cv=document.getElementById('stage'),ctx=cv.getContext('2d');
   // ---- sprite assets (multi-file: /assets) ----
   const DIMG={}; let imgLoaded=0;
