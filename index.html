@@ -62,7 +62,7 @@
 </div></div>
 <script>
 (() => {
-  const BUILD_VERSION = "v2.3";   // ship-it verify anchor — bump every build
+  const BUILD_VERSION = "v2.4";   // ship-it verify anchor — bump every build
   try{console.log('No Civ, Just Deer '+BUILD_VERSION);
     const _cr=document.querySelector('.credits');if(_cr)_cr.insertAdjacentHTML('beforeend',' <span style="opacity:.7;">· '+BUILD_VERSION+'</span>');}catch(e){}
   const cv=document.getElementById('stage'),ctx=cv.getContext('2d');
@@ -71,6 +71,8 @@
   ['idle','idle_blink','walkA','walkB','walkC','runA','runB','work_forage','work_mine','work_chop','work_generic','happy','rest','jump'].forEach(n=>{const im=new Image();im.onload=()=>imgLoaded++;im.src='assets/deer/'+n+'.png';DIMG[n]=im;});
   const BIMG={};
   ['farm','mine','lumber','mason','warehouse','deerhouse','well','warren','watchtower','townhall'].forEach(n=>{const im=new Image();im.onload=()=>imgLoaded++;im.src='assets/buildings/'+n+'.png';BIMG[n]=im;});
+  const HIMG={};
+  ['idle','walkA','walkB','look','surprised'].forEach(n=>{const im=new Image();im.onload=()=>imgLoaded++;im.src='assets/human/'+n+'.png';HIMG[n]=im;});
   const BLD_OF={farm:'farm',mine:'mine',lumber:'lumber',mason:'mason',warren:'warren',watchtower:'watchtower',tunnels:'deerhouse',lever:'townhall'};
   const TIMG={};
   ['grass','darkgrass','tilled','dirt','stone','water'].forEach(n=>{const im=new Image();im.onload=()=>imgLoaded++;im.src='assets/terrain/'+n+'.png';TIMG[n]=im;});
@@ -352,6 +354,7 @@
     if(phase==='none'){if(uprising)startWarning();else if(!liberated&&isDay()&&Math.random()<dt*0.038*patrolMult*(0.3+0.7*warmup)*(1+2*wariness))startWarning();}
     else if(phase==='warning'){phaseT-=dt;if(phaseT<=0)spawnHuman();}
     else if(phase==='active'&&human){
+      human.spot=Math.max(0,(human.spot||0)-dt);
       if(human.camp&&!human.camping){const dx=human.tx-human.gx,dy=human.ty-human.gy,dl=Math.hypot(dx,dy)||1;human.dirx=dx/dl;human.diry=dy/dl;human.gx+=human.dirx*dt*0.9;human.gy+=human.diry*dt*0.9;if(dl<0.6){human.camping=true;showWarn('🏕 Humans are camping here!');}}
       else if(human.camping){human.campT-=dt;if(human.campT<=0)human.camping=false;}
       else{const dx=human.ex-human.gx,dy=human.ey-human.gy,dl=Math.hypot(dx,dy)||1;human.dirx=dx/dl;human.diry=dy/dl;human.gx+=human.dirx*dt*0.85;human.gy+=human.diry*dt*0.85;if(human.gx<-1.5||human.gx>GW+1.5||human.gy<-1.5||human.gy>GH+1.5){human=null;phase='none';}}
@@ -374,7 +377,7 @@
             d._acc=(d._acc||0)+dt*rate;if(d._acc>=1){d._acc-=1;let prod=null;if(ot==='forage'||ot==='farm')prod='food';else if(ot==='mine')prod='stone';else if(ot==='chop')prod='wood';else if(ot==='lumber'){if(res.wood>0){res.wood--;prod='lumber';}}else if(ot==='mason'){if(res.stone>0){res.stone--;prod='bricks';}}if(prod){res[prod]++;addXP(d,ot);sfx('gather');const s=W2S(iso(d.gx,d.gy).x,iso(d.gx,d.gy).y-22);pop(s.x,s.y,prod);}}
             if(!hidden&&human&&phase==='active'&&!nearCover(d)){const pw=iso(human.gx,human.gy),dw=iso(d.gx,d.gy);const vx=dw.x-pw.x,vy=dw.y-pw.y,vl=Math.hypot(vx,vy)||1;
               if(vl<human.R){const fw=iso(human.gx+human.dirx,human.gy+human.diry);const fdx=fw.x-pw.x,fdy=fw.y-pw.y,fl=Math.hypot(fdx,fdy)||1;const a2=Math.acos(clamp((vx/vl)*(fdx/fl)+(vy/vl)*(fdy/fl),-1,1));
-                if(a2<human.half){suspicion=Math.min(1,suspicion+dt*0.16);wariness=Math.min(1,wariness+dt*0.05);d.seen=1;}}}}
+                if(a2<human.half){suspicion=Math.min(1,suspicion+dt*0.16);wariness=Math.min(1,wariness+dt*0.05);d.seen=1;human.spot=0.9;}}}}
         }
       } else {
         if(autoActive&&(d.autoCd=(d.autoCd||0)-dt)<=0&&Math.random()<dt*(0.10+happiness*0.35)){let best=null,bd=9;for(const r of raws){if(r.slots.some(sl=>!sl.taken)){const dq=Math.hypot(r.gx-d.gx,r.gy-d.gy);if(dq<bd){bd=dq;best=r;}}}if(best){const slot=best.slots.find(sl=>!sl.taken);slot.taken=d;d.slot=slot;d.target={type:'raw',obj:best};d.atWork=0;d.auto=true;d.autoT=rand(7,13);}}
@@ -486,8 +489,12 @@
     if(d.lvl>0){ctx.fillStyle=d.lvl===2?'#e0913c':'#5a9847';ctx.font='bold 9px ui-rounded';ctx.textAlign='center';ctx.fillText(d.lvl===2?'✦✦':'✦',s.x,s.y-d.lift-1);}}
   function drawHuman(){if(!human||phase!=='active')return;const s=iso(human.gx,human.gy);const fw=iso(human.gx+(human.dirx||1),human.gy+(human.diry||0));const fa=Math.atan2(fw.y-s.y,fw.x-s.x);
     ctx.fillStyle='rgba(232,136,127,.14)';ctx.strokeStyle='rgba(232,136,127,.5)';ctx.lineWidth=2;ctx.beginPath();ctx.moveTo(s.x,s.y);ctx.arc(s.x,s.y,human.R,fa-human.half,fa+human.half);ctx.closePath();ctx.fill();ctx.stroke();
-    ctx.fillStyle='rgba(50,50,60,.22)';ctx.beginPath();ctx.ellipse(s.x,s.y,9,4,0,0,6.28);ctx.fill();ctx.save();ctx.translate(s.x,s.y-14);ctx.fillStyle='#6b7a5a';ctx.fillRect(-5,-6,10,16);ctx.fillStyle='#e9c79a';ctx.beginPath();ctx.arc(0,-10,5,0,6.28);ctx.fill();ctx.restore();
-    ctx.font='13px serif';ctx.textAlign='center';ctx.fillText(human.camping?'🏕':'🚶',s.x,s.y-30);}
+    ctx.fillStyle='rgba(50,50,60,.22)';ctx.beginPath();ctx.ellipse(s.x,s.y,11,5,0,0,6.28);ctx.fill();
+    const hst=(human.spot>0)?'surprised':(human.camping?'look':['walkA','walkB'][Math.floor(performance.now()/230)&1]);
+    const img=HIMG[hst]||HIMG.idle,faceLeft=(human.dirx||0)<-0.05;
+    if(img&&img.complete&&img.naturalHeight){const H=76,W=H*img.naturalWidth/img.naturalHeight,fy=H*200/210;
+      ctx.save();ctx.translate(s.x,s.y);if(faceLeft)ctx.scale(-1,1);ctx.drawImage(img,-W/2,-fy,W,H);ctx.restore();}
+    if(human.camping){ctx.font='13px serif';ctx.textAlign='center';ctx.fillText('🏕',s.x,s.y-66);}}
   function edgeArrow(){if(phase==='none'||!started)return;let dir;if(phase==='warning')dir=DIRS[warnDir];else if(human)dir=[human.dirx,human.diry];else return;
     const wv=iso(dir[0]||0,dir[1]||0);const a=Math.atan2(wv.y,wv.x);const r=Math.min(W,H)*0.38,ax=W/2+Math.cos(a)*r,ay=H/2+Math.sin(a)*r,pulse=0.6+0.4*Math.sin(performance.now()/200);
     ctx.save();ctx.translate(ax,ay);ctx.rotate(a);ctx.fillStyle='rgba(232,136,127,'+pulse+')';ctx.beginPath();ctx.moveTo(18,0);ctx.lineTo(-10,-12);ctx.lineTo(-4,0);ctx.lineTo(-10,12);ctx.closePath();ctx.fill();ctx.restore();
