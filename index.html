@@ -54,7 +54,7 @@
 <div class="hint" id="hint">👆 Drag a deer onto a glowing 🫐 · 🪨 · 🪵 node to gather</div>
 <div id="setup"><div class="card">
   <img id="logoImg" src="assets/logo.png" alt="No Civ, Just Deer" style="display:block;max-width:88%;max-height:150px;margin:0 auto 2px;object-fit:contain;" onerror="this.style.display='none';var t=document.getElementById('logoText');if(t)t.style.display='block';"/>
-  <h2 id="logoText" style="display:none;">🦌 No Civ, Just Deer</h2><div class="sub">Set up your world</div>
+  <h2 id="logoText" style="display:none;">🦌 No Civ, Just Deer</h2><div class="sub">Set up your world <span id="verBadge" style="display:inline-block;margin-left:6px;padding:1px 8px;border-radius:999px;background:#efe7d4;color:#6d5d40;font-size:11px;font-weight:800;letter-spacing:.3px;vertical-align:middle;"></span></div>
   <button class="begin" id="continueBtn" style="display:none;background:#3a7d49;margin:2px 0 12px;">▶ Continue Colony</button>
   <div class="story">Fed up with the humans, a few deer slipped into the woods to build a colony of their own…</div>
   <div class="row"><div class="lab">MAP SIZE</div><div class="opts" data-k="size"><button data-v="small">Small</button><button data-v="med" class="on">Medium</button><button data-v="large">Large</button></div></div>
@@ -66,8 +66,9 @@
 </div></div>
 <script>
 (() => {
-  const BUILD_VERSION = "v1.1.0";   // ship-it verify anchor — bump every build
+  const BUILD_VERSION = "v1.1.1";   // ship-it verify anchor — bump every build
   try{console.log('No Civ, Just Deer '+BUILD_VERSION);
+    const _vb=document.getElementById('verBadge');if(_vb)_vb.textContent=BUILD_VERSION;
     const _cr=document.querySelector('.credits');if(_cr)_cr.insertAdjacentHTML('beforeend',' <span style="opacity:.7;">· '+BUILD_VERSION+'</span>');}catch(e){}
   const cv=document.getElementById('stage'),ctx=cv.getContext('2d');
   // ---- sprite assets (multi-file: /assets) ----
