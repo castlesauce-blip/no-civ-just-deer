@@ -66,3 +66,11 @@ Monte-Carlo pacing sim (`sim_pacing.py`, 6000 runs) on the readiness economy:
 
 ## Rubric grade (HEP/PLAY, v2.12, 2026-07-19)
 Story: onboarding **Proficient**, aesthetic fit **Excellent**. Play: pacing **Excellent** (simulated), juice **Proficient**. Mechanics: core loop **Proficient**, economy **Excellent** (both sims run). Usability: layout **Proficient**, accessibility **Excellent** (scripted AA). Ethical: N/A (no monetization). No Inadequate/Developing remaining.
+
+## Harsh re-grade + fixes (v2.14–v2.15, 2026-07-19)
+Adversarial re-grade with live runtime evidence (3 viewports, DOM contrast sweep, tap-target audit) overturned two earlier grades:
+- **Accessibility was NOT Excellent.** Live sweep found 3 WCAG-AA failures on info-carrying button labels: Rally (2.53:1), Deer (3.31:1), Done (2.54:1). Fixed → #a8631a / #3f6fae / #b5484a (4.7–5.3:1). Re-verified 0 fails across setup, gameplay, roster, build tray. Honest grade **Proficient** (not Excellent) until keyboard nav + large-text ship (still deferred). (v2.14)
+- **Two honest Developings** the creator chose to lift before 1.0 (v2.15):
+  1. *Onboarding* — expanded `updateGuide()` from 3 buckets to a finer state-derived teacher (gather → build → **assign workers** → refiners → Colony Hall → hide → uprising); replaced the static pre-start hint wall with the concise stage-1 prompt. The assign-stage copy explicitly teaches "assigned deer raise Readiness fastest."
+  2. *Decision density* — readiness multiplier `clamp(0.6+0.09·wk,0.6,1.7)` → `clamp(0.30+0.16·wk,0.30,2.0)`. Idle floor cut to 0.30 so a full workforce raises Readiness ~5.8× faster than idling (was ~2.8×) — **waiting is never optimal**. Re-tuned via sim_pacing2.py (K held at 0.000278): median **57.7 min**, 99.4% in 40–80 band, first milestone 4.7 min, 0 never-finish. Pacing preserved.
+- Also added a reduced-motion-guarded juice layer (v2.13): screenshake + dust bursts on build-complete/uprising/spotted/win/deer-drop + star-pops. Verified 0 console errors both motion states.
