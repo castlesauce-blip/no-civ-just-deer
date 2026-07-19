@@ -47,7 +47,7 @@
 <div id="btray" style="display:none;position:fixed;left:0;right:0;bottom:0;background:rgba(255,251,240,.98);padding:7px 6px;overflow-x:auto;white-space:nowrap;box-shadow:0 -3px 14px rgba(80,70,40,.22);z-index:4;"></div>
 <div id="rpanel" style="display:none;position:fixed;inset:0;background:rgba(40,34,26,.72);z-index:6;overflow:auto;padding:14px;"></div>
 <div class="warn" id="warn"></div>
-<div id="end" style="display:none;position:fixed;inset:0;place-items:center;background:rgba(40,34,26,.86);z-index:6;"><div class="card" style="text-align:center;"><h2 style="font-size:26px;">🌿</h2><p style="font-size:14px;color:#5c4f3a;line-height:1.55;margin:6px 0 4px;"></p><button class="begin" id="keepBtn">Keep building →</button><button class="begin" id="newBtn" style="background:#8a7a5c;margin-top:8px;">New colony</button></div></div>
+<div id="end" style="display:none;position:fixed;inset:0;place-items:center;background:rgba(40,34,26,.86);z-index:6;"><div class="card" style="text-align:center;"><h2 style="font-size:26px;">🌿</h2><p style="font-size:14px;color:#5c4f3a;line-height:1.55;margin:6px 0 4px;"></p><button class="begin" id="keepBtn">Keep building →</button><button class="begin" id="newBtn" style="background:#8a7a5c;margin-top:8px;">New colony</button><div style="margin-top:12px;font-size:10px;line-height:1.5;color:#8a7a5c;opacity:.85;">Sound effects &amp; music by <a href="https://kenney.nl" target="_blank" rel="noopener" style="color:#7b6a4c;">Kenney</a> — <a href="https://creativecommons.org/publicdomain/zero/1.0/" target="_blank" rel="noopener" style="color:#7b6a4c;">CC0</a>. Art original to this project. See CREDITS.md.</div></div></div>
 <div class="hint" id="hint">Drag a deer onto a 🫐bush / 🪨rock to hand-gather · TAP a build site to build · assign deer to a Mine/Farm for way more output · 🪵chop logs → 🪵Lumber Mill=🟫lumber · Stone Mason=🧱bricks → build the 🔧 Master Lever</div>
 <div id="setup"><div class="card">
   <h2>🦌 Deer Colony</h2><div class="sub">Set up your world</div>
@@ -62,7 +62,7 @@
 </div></div>
 <script>
 (() => {
-  const BUILD_VERSION = "v2.5";   // ship-it verify anchor — bump every build
+  const BUILD_VERSION = "v2.6";   // ship-it verify anchor — bump every build
   try{console.log('No Civ, Just Deer '+BUILD_VERSION);
     const _cr=document.querySelector('.credits');if(_cr)_cr.insertAdjacentHTML('beforeend',' <span style="opacity:.7;">· '+BUILD_VERSION+'</span>');}catch(e){}
   const cv=document.getElementById('stage'),ctx=cv.getContext('2d');

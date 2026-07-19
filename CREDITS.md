@@ -21,12 +21,19 @@ All sprites and terrain (deer, buildings, terrain tiles, resource icons, UI, FX)
 
 ## Code & tooling
 
-- Game: hand-written single-file HTML5 canvas (no engine/framework).
+- Game: hand-written single-file HTML5 canvas (no engine/framework). No third-party code, engine, or runtime library ships in the game — nothing to attribute at runtime.
 - Sprite extraction: the project's own magenta chroma-key + unmix keyer (`art/keyer.py`).
+
+## Build tooling (not shipped in the game)
+
+The keyer (`art/keyer.py`) runs on these Python libraries at build time only; none are distributed with the game, but listed for completeness:
+- **NumPy** — BSD 3-Clause License — https://numpy.org
+- **SciPy** — BSD 3-Clause License — https://scipy.org
+- **Pillow (PIL fork)** — HPND (MIT-CMU) License — https://python-pillow.org
 
 ## Asset sourcing
 
 Kenney packs were located via the game-forge asset library (`find-game-asset` skill). The full CC0 Kenney library is catalogued in the Game Builder project.
 
 ---
-*Per project policy, sources are cited both here and in-game (start screen footer).*
+*Per project policy, sources are cited both here and in-game (start **and** end/win screen footers).*
