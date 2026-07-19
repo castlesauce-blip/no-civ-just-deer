@@ -57,3 +57,12 @@ Monte-Carlo pacing sim (`sim_pacing.py`, 6000 runs) on the readiness economy:
 - Readiness base `K=0.000278/s`; mult `clamp(0.6+0.09·workers,0.6,1.7)` → mult 1.0 (~4.4 working deer) = exactly 60 min. Herd ramps 2→9 (cap), so pace swings 77-min (2 deer) → 42-min (cap).
 - Resource economy: raw gathering (0.4/s/deer) trivially affords core buildings; refined lumber/bricks are the real effort but **off the critical path** to Uprising — no starvation risk.
 - **Locked change:** first milestone lowered **0.10 → 0.06** (first extra deer now ~3.8 min vs 6.3) to fix a reward-sparse opening; negligible effect on the 60-min total. Creator-approved.
+
+## Balance — resource economy sim (2026-07-19)
+`sim_resource.py` (4000 runs) on the faucet/sink currency (food/stone/wood→lumber, stone→bricks vs building costs):
+- **100%** complete the full 8-building plan incl. the 40L+40B Master Lever within the 60-min window; **median 21 min** to a full colony (P90 21.4) — resources are never the bottleneck, readiness time is.
+- **Zero starvation** (raw food/stone never negative). No inflation flags.
+- Completion depends on assigning refiners to Lumber Mill + Stone Mason; the hint bar already teaches this. → **Economy rigor now Excellent (both readiness curve + resource faucet/sink simulation-verified).**
+
+## Rubric grade (HEP/PLAY, v2.12, 2026-07-19)
+Story: onboarding **Proficient**, aesthetic fit **Excellent**. Play: pacing **Excellent** (simulated), juice **Proficient**. Mechanics: core loop **Proficient**, economy **Excellent** (both sims run). Usability: layout **Proficient**, accessibility **Excellent** (scripted AA). Ethical: N/A (no monetization). No Inadequate/Developing remaining.
