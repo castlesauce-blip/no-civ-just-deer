@@ -63,7 +63,7 @@
 </div></div>
 <script>
 (() => {
-  const BUILD_VERSION = "v1.0.0";   // ship-it verify anchor — bump every build
+  const BUILD_VERSION = "v1.0.1";   // ship-it verify anchor — bump every build
   try{console.log('No Civ, Just Deer '+BUILD_VERSION);
     const _cr=document.querySelector('.credits');if(_cr)_cr.insertAdjacentHTML('beforeend',' <span style="opacity:.7;">· '+BUILD_VERSION+'</span>');}catch(e){}
   const cv=document.getElementById('stage'),ctx=cv.getContext('2d');
@@ -88,7 +88,7 @@
     if(d.target&&d.atWork>.5){const ot=d.target.obj.k||d.target.obj.type;return DIMG[(ot==='forage'||ot==='farm')?'work_forage':ot==='mine'?'work_mine':ot==='chop'?'work_chop':'work_generic'];}
     const spd=Math.hypot(d.vx,d.vy),per=d.bob||0,t=performance.now()/1000,dist=d.dist||0;
     if(spd>0.075){return DIMG[(Math.floor(dist/0.12)&1)?'runB':'runA']||DIMG.runA;}
-    if(spd>0.006){return DIMG[WALKSEQ[Math.floor(dist/0.30)&3]]||DIMG.walkA;}
+    if(spd>0.006){return DIMG[WALKSEQ[Math.floor(dist/0.34)&3]]||DIMG.walkA;}
     // idle: rare blink
     if(Math.sin(t*0.7+per*9)>0.975)return DIMG.idle_blink||DIMG.idle;
     return DIMG.idle;
@@ -406,7 +406,7 @@
         for(const o of herd){if(o===d||o.held)continue;const dx=o.gx-d.gx,dy=o.gy-d.gy,l=Math.hypot(dx,dy)||1;if(l<1.8){d.vx-=dx/l*.05;d.vy-=dy/l*.05;}}
         d.bob+=dt;
       }
-      const sp=Math.hypot(d.vx,d.vy),cap=.06;if(sp>cap){d.vx=d.vx/sp*cap;d.vy=d.vy/sp*cap;}
+      const sp=Math.hypot(d.vx,d.vy),cap=.042;if(sp>cap){d.vx=d.vx/sp*cap;d.vy=d.vy/sp*cap;}
       d.vx*=.9;d.vy*=.9;
       // avoid walking into water
       const ngx=clamp(d.gx+d.vx*dt*60,0,GW-1),ngy=clamp(d.gy+d.vy*dt*60,0,GH-1);
@@ -496,7 +496,7 @@
     const hl=(hidden&&d.target&&d.target.type==='struct')?hideLift:0;
     // procedural, per-deer varied motion (no dust frames)
     const t=performance.now()/1000,per=d.bob||0;let hop=0,sqx=1,sqy=1;
-    if(!d.held&&!reduceMotion){if(spd>0.006){const ph=(d.dist||0)*(Math.PI/0.30)+per;hop=Math.abs(Math.sin(ph))*(3.4+((d.tone+12)%5)*0.4);const q=Math.cos(ph*2);sqx=1+q*0.055;sqy=1-q*0.055;}
+    if(!d.held&&!reduceMotion){if(spd>0.006){const ph=(d.dist||0)*(Math.PI/0.48)+per;hop=Math.abs(Math.sin(ph))*(1.9+((d.tone+12)%5)*0.22);const q=Math.cos(ph*2);sqx=1+q*0.035;sqy=1-q*0.035;}
       else hop=Math.sin(t*2.1+per)*0.6+0.6;}
     ctx.fillStyle='rgba(50,70,35,.22)';ctx.beginPath();ctx.ellipse(s.x,s.y,12,5,0,0,6.28);ctx.fill();
     const img=deerFrame(d)||DIMG.idle;
