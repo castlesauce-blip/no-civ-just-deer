@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8"/>
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no"/>
-<title>Deer Colony — M2.1 (water + setup)</title>
+<title>No Civ, Just Deer</title>
 <style>
   *{box-sizing:border-box;-webkit-tap-highlight-color:transparent;-webkit-user-select:none;user-select:none;}
   html,body{margin:0;height:100%;overflow:hidden;background:#9ec27a;font-family:ui-rounded,"Segoe UI",system-ui,sans-serif;color:#3d3326;}
@@ -50,7 +50,7 @@
 <div id="end" style="display:none;position:fixed;inset:0;place-items:center;background:rgba(40,34,26,.86);z-index:6;"><div class="card" style="text-align:center;"><h2 style="font-size:26px;">🌿</h2><p style="font-size:14px;color:#5c4f3a;line-height:1.55;margin:6px 0 4px;"></p><button class="begin" id="keepBtn">Keep building →</button><button class="begin" id="newBtn" style="background:#6d5d40;margin-top:8px;">New colony</button><div style="margin-top:12px;font-size:10px;line-height:1.5;color:#6d5d40;opacity:.85;">Sound effects &amp; music by <a href="https://kenney.nl" target="_blank" rel="noopener" style="color:#7b6a4c;">Kenney</a> — <a href="https://creativecommons.org/publicdomain/zero/1.0/" target="_blank" rel="noopener" style="color:#7b6a4c;">CC0</a>. Art original to this project. See CREDITS.md.</div></div></div>
 <div class="hint" id="hint">Drag a deer onto a 🫐bush / 🪨rock to hand-gather · TAP a build site to build · assign deer to a Mine/Farm for way more output · 🪵chop logs → 🪵Lumber Mill=🟫lumber · Stone Mason=🧱bricks → build the 🔧 Master Lever</div>
 <div id="setup"><div class="card">
-  <h2>🦌 Deer Colony</h2><div class="sub">Set up your world</div>
+  <h2>🦌 No Civ, Just Deer</h2><div class="sub">Set up your world</div>
   <button class="begin" id="continueBtn" style="display:none;background:#3a7d49;margin:2px 0 12px;">▶ Continue Colony</button>
   <div class="story">Fed up with the humans, a few deer slipped into the woods to build a colony of their own…</div>
   <div class="row"><div class="lab">MAP SIZE</div><div class="opts" data-k="size"><button data-v="small">Small</button><button data-v="med" class="on">Medium</button><button data-v="large">Large</button></div></div>
@@ -62,7 +62,7 @@
 </div></div>
 <script>
 (() => {
-  const BUILD_VERSION = "v2.10";   // ship-it verify anchor — bump every build
+  const BUILD_VERSION = "v2.11";   // ship-it verify anchor — bump every build
   try{console.log('No Civ, Just Deer '+BUILD_VERSION);
     const _cr=document.querySelector('.credits');if(_cr)_cr.insertAdjacentHTML('beforeend',' <span style="opacity:.7;">· '+BUILD_VERSION+'</span>');}catch(e){}
   const cv=document.getElementById('stage'),ctx=cv.getContext('2d');
