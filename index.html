@@ -62,7 +62,7 @@
 </div></div>
 <script>
 (() => {
-  const BUILD_VERSION = "v2.7";   // ship-it verify anchor — bump every build
+  const BUILD_VERSION = "v2.8";   // ship-it verify anchor — bump every build
   try{console.log('No Civ, Just Deer '+BUILD_VERSION);
     const _cr=document.querySelector('.credits');if(_cr)_cr.insertAdjacentHTML('beforeend',' <span style="opacity:.7;">· '+BUILD_VERSION+'</span>');}catch(e){}
   const cv=document.getElementById('stage'),ctx=cv.getContext('2d');
@@ -72,7 +72,7 @@
   const BIMG={};
   ['farm','mine','lumber','mason','warehouse','deerhouse','well','warren','watchtower','townhall'].forEach(n=>{const im=new Image();im.onload=()=>imgLoaded++;im.src='assets/buildings/'+n+'.png';BIMG[n]=im;});
   const HIMG={};
-  ['idle','walkA','walkB','look','surprised'].forEach(n=>{const im=new Image();im.onload=()=>imgLoaded++;im.src='assets/human/'+n+'.png';HIMG[n]=im;});
+  ['idle','walkA','walkB','look','surprised','back'].forEach(n=>{const im=new Image();im.onload=()=>imgLoaded++;im.src='assets/human/'+n+'.png';HIMG[n]=im;});
   const BLD_OF={farm:'farm',mine:'mine',lumber:'lumber',mason:'mason',warren:'warren',watchtower:'watchtower',tunnels:'deerhouse',lever:'townhall'};
   const TIMG={};
   ['grass','darkgrass','tilled','dirt','stone','water'].forEach(n=>{const im=new Image();im.onload=()=>imgLoaded++;im.src='assets/terrain/'+n+'.png';TIMG[n]=im;});
@@ -490,8 +490,9 @@
   function drawHuman(){if(!human||phase!=='active')return;const s=iso(human.gx,human.gy);const fw=iso(human.gx+(human.dirx||1),human.gy+(human.diry||0));const fa=Math.atan2(fw.y-s.y,fw.x-s.x);
     ctx.fillStyle='rgba(232,136,127,.14)';ctx.strokeStyle='rgba(232,136,127,.5)';ctx.lineWidth=2;ctx.beginPath();ctx.moveTo(s.x,s.y);ctx.arc(s.x,s.y,human.R,fa-human.half,fa+human.half);ctx.closePath();ctx.fill();ctx.stroke();
     ctx.fillStyle='rgba(50,50,60,.22)';ctx.beginPath();ctx.ellipse(s.x,s.y,11,5,0,0,6.28);ctx.fill();
-    const hst=(human.spot>0)?'surprised':(human.camping?'look':['walkA','walkB'][Math.floor(performance.now()/230)&1]);
-    const img=HIMG[hst]||HIMG.idle,faceLeft=(human.dirx||0)<-0.05;
+    const away=((human.dirx||0)+(human.diry||0))<-0.02;
+    const hst=(human.spot>0)?'surprised':(human.camping?'look':((away&&HIMG.back&&HIMG.back.complete)?'back':['walkA','walkB'][Math.floor(performance.now()/230)&1]));
+    const img=HIMG[hst]||HIMG.idle,faceLeft=((human.dirx||0)-(human.diry||0))<-0.02;
     if(img&&img.complete&&img.naturalHeight){const H=76,W=H*img.naturalWidth/img.naturalHeight,fy=H*200/210;
       ctx.save();ctx.translate(s.x,s.y);if(faceLeft)ctx.scale(-1,1);ctx.drawImage(img,-W/2,-fy,W,H);ctx.restore();}
     else{ctx.save();ctx.translate(s.x,s.y-16);ctx.fillStyle='#5c6b3f';ctx.fillRect(-5,-8,10,18);ctx.fillStyle='#e9c79a';ctx.beginPath();ctx.arc(0,-12,5,0,6.28);ctx.fill();ctx.fillStyle='#3f4a2a';ctx.fillRect(-7,-16,14,3);ctx.restore();}
