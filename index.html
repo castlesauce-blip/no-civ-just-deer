@@ -39,11 +39,11 @@
 <div class="clock" id="clock">☀️</div>
 <div class="zoom"><button id="zin">+</button><button id="zout">−</button></div>
 <button class="lever" id="lever">🕳️ Go to Ground</button>
-<button class="lever" id="rally" style="left:12px;bottom:70px;background:#e0913c;display:none;">📣 Rally</button>
+<button class="lever" id="rally" style="left:12px;bottom:70px;background:#a8631a;display:none;">📣 Rally</button>
 <button class="lever" id="rise" style="left:50%;bottom:70px;transform:translateX(-50%);background:#b5484a;display:none;">🔥 Call the Uprising</button>
 <button class="lever" id="deco" style="left:12px;bottom:124px;background:#3a7d49;">🎨 Decorate</button>
 <button class="lever" id="build" style="left:12px;bottom:178px;background:#9f6018;">🔨 Build</button>
-<button class="lever" id="roster" style="left:12px;bottom:232px;background:#5b8fd6;">🦌 Deer</button>
+<button class="lever" id="roster" style="left:12px;bottom:232px;background:#3f6fae;">🦌 Deer</button>
 <div id="tray" style="display:none;position:fixed;left:0;right:0;bottom:0;background:rgba(255,253,246,.97);padding:7px 6px;overflow-x:auto;white-space:nowrap;box-shadow:0 -3px 14px rgba(80,70,40,.22);z-index:4;"></div>
 <div id="btray" style="display:none;position:fixed;left:0;right:0;bottom:0;background:rgba(255,251,240,.98);padding:7px 6px;overflow-x:auto;white-space:nowrap;box-shadow:0 -3px 14px rgba(80,70,40,.22);z-index:4;"></div>
 <div id="rpanel" style="display:none;position:fixed;inset:0;background:rgba(40,34,26,.72);z-index:6;overflow:auto;padding:14px;"></div>
@@ -63,7 +63,7 @@
 </div></div>
 <script>
 (() => {
-  const BUILD_VERSION = "v2.13";   // ship-it verify anchor — bump every build
+  const BUILD_VERSION = "v2.14";   // ship-it verify anchor — bump every build
   try{console.log('No Civ, Just Deer '+BUILD_VERSION);
     const _cr=document.querySelector('.credits');if(_cr)_cr.insertAdjacentHTML('beforeend',' <span style="opacity:.7;">· '+BUILD_VERSION+'</span>');}catch(e){}
   const cv=document.getElementById('stage'),ctx=cv.getContext('2d');
@@ -238,7 +238,7 @@
     if(!obj){showWarn('No open '+job+' spot — gather node or build one');return;}
     const slot=obj.slots.find(sl=>!sl.taken);slot.taken=d;d.slot=slot;d.target={type:kind,obj};d.atWork=0;d.auto=false;firstAssign=true;}
   const _rp=document.getElementById('rpanel');
-  function buildRoster(){let h='<div style="max-width:520px;margin:0 auto;background:#fffdf6;border-radius:16px;padding:14px;box-shadow:0 10px 40px rgba(0,0,0,.4);"><div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:6px;"><b style="font-size:18px;color:#5c4f3a;">🦌 The Herd ('+herd.length+')</b><button id="rclose" style="border:0;background:#e8887f;color:#fff;font-weight:800;border-radius:10px;padding:6px 14px;">Done</button></div><div style="font-size:11px;color:#6d5d40;margin-bottom:6px;">Tap a job to reassign a deer.</div>';
+  function buildRoster(){let h='<div style="max-width:520px;margin:0 auto;background:#fffdf6;border-radius:16px;padding:14px;box-shadow:0 10px 40px rgba(0,0,0,.4);"><div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:6px;"><b style="font-size:18px;color:#5c4f3a;">🦌 The Herd ('+herd.length+')</b><button id="rclose" style="border:0;background:#b5484a;color:#fff;font-weight:800;border-radius:10px;padding:6px 14px;">Done</button></div><div style="font-size:11px;color:#6d5d40;margin-bottom:6px;">Tap a job to reassign a deer.</div>';
     herd.forEach((d,i)=>{const lv=['','✦','✦✦'][d.lvl]||'';h+='<div style="display:flex;align-items:center;gap:5px;padding:6px 2px;border-top:1px solid #efe7d4;flex-wrap:wrap;"><b style="min-width:54px;color:#5c4f3a;font-size:13px;">'+d.name+'</b><span style="font-size:11px;color:#e0913c;min-width:22px;">'+lv+'</span><span style="flex:1;font-size:12px;color:#6d5d40;min-width:80px;">'+deerJob(d)+'</span>';
       for(const [j,ic] of [['forage','🫐'],['mine','🪨'],['chop','🪵'],['idle','💤']]){h+='<button data-i="'+i+'" data-j="'+j+'" class="rjob" style="border:1px solid #e5dcc4;background:#f5efe0;border-radius:8px;padding:4px 8px;font-size:14px;">'+ic+'</button>';}
       h+='</div>';});
