@@ -4,6 +4,8 @@
 <meta charset="utf-8"/>
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no"/>
 <title>No Civ, Just Deer</title>
+<link rel="icon" type="image/png" href="assets/logo.png"/>
+<link rel="apple-touch-icon" href="assets/logo.png"/>
 <style>
   *{box-sizing:border-box;-webkit-tap-highlight-color:transparent;-webkit-user-select:none;user-select:none;}
   html,body{margin:0;height:100%;overflow:hidden;background:#9ec27a;font-family:ui-rounded,"Segoe UI",system-ui,sans-serif;color:#3d3326;}
@@ -51,7 +53,8 @@
 <div id="end" style="display:none;position:fixed;inset:0;place-items:center;background:rgba(40,34,26,.86);z-index:6;"><div class="card" style="text-align:center;"><h2 style="font-size:26px;">🌿</h2><p style="font-size:14px;color:#5c4f3a;line-height:1.55;margin:6px 0 4px;"></p><button class="begin" id="keepBtn">Keep building →</button><button class="begin" id="newBtn" style="background:#6d5d40;margin-top:8px;">New colony</button><div style="margin-top:12px;font-size:10px;line-height:1.5;color:#6d5d40;opacity:.85;">Sound effects &amp; music by <a href="https://kenney.nl" target="_blank" rel="noopener" style="color:#7b6a4c;">Kenney</a> — <a href="https://creativecommons.org/publicdomain/zero/1.0/" target="_blank" rel="noopener" style="color:#7b6a4c;">CC0</a>. Art original to this project. See CREDITS.md.</div></div></div>
 <div class="hint" id="hint">👆 Drag a deer onto a glowing 🫐 · 🪨 · 🪵 node to gather</div>
 <div id="setup"><div class="card">
-  <h2>🦌 No Civ, Just Deer</h2><div class="sub">Set up your world</div>
+  <img id="logoImg" src="assets/logo.png" alt="No Civ, Just Deer" style="display:block;max-width:88%;max-height:150px;margin:0 auto 2px;object-fit:contain;" onerror="this.style.display='none';var t=document.getElementById('logoText');if(t)t.style.display='block';"/>
+  <h2 id="logoText" style="display:none;">🦌 No Civ, Just Deer</h2><div class="sub">Set up your world</div>
   <button class="begin" id="continueBtn" style="display:none;background:#3a7d49;margin:2px 0 12px;">▶ Continue Colony</button>
   <div class="story">Fed up with the humans, a few deer slipped into the woods to build a colony of their own…</div>
   <div class="row"><div class="lab">MAP SIZE</div><div class="opts" data-k="size"><button data-v="small">Small</button><button data-v="med" class="on">Medium</button><button data-v="large">Large</button></div></div>
@@ -63,13 +66,16 @@
 </div></div>
 <script>
 (() => {
-  const BUILD_VERSION = "v1.0.1";   // ship-it verify anchor — bump every build
+  const BUILD_VERSION = "v1.1.0";   // ship-it verify anchor — bump every build
   try{console.log('No Civ, Just Deer '+BUILD_VERSION);
     const _cr=document.querySelector('.credits');if(_cr)_cr.insertAdjacentHTML('beforeend',' <span style="opacity:.7;">· '+BUILD_VERSION+'</span>');}catch(e){}
   const cv=document.getElementById('stage'),ctx=cv.getContext('2d');
   // ---- sprite assets (multi-file: /assets) ----
   const DIMG={}; let imgLoaded=0;
   ['idle','idle_blink','walkA','walkB','walkC','runA','runB','work_forage','work_mine','work_chop','work_generic','happy','rest','jump'].forEach(n=>{const im=new Image();im.onload=()=>imgLoaded++;im.src='assets/deer/'+n+'.png';DIMG[n]=im;});
+  // ---- layered walk-cycle deer (DEER-014 right / DEER-015 left) — 256×256, pivot(128,228), ground y=228 ----
+  const DWALK={R:[],L:[]}; const DWALK_GROUND=228/256; // frame fraction where hooves meet the ground
+  ['R','L'].forEach(side=>{for(let i=0;i<6;i++){const im=new Image();im.onload=()=>imgLoaded++;im.src='assets/deer/walk/'+side+i+'.png';DWALK[side][i]=im;}});
   const BIMG={};
   ['farm','mine','lumber','mason','warehouse','deerhouse','well','warren','watchtower','townhall'].forEach(n=>{const im=new Image();im.onload=()=>imgLoaded++;im.src='assets/buildings/'+n+'.png';BIMG[n]=im;});
   const HIMG={};
@@ -92,6 +98,17 @@
     // idle: rare blink
     if(Math.sin(t*0.7+per*9)>0.975)return DIMG.idle_blink||DIMG.idle;
     return DIMG.idle;
+  }
+  // layered walk-cycle frame picker: pre-authored per direction (no mirroring)
+  const WALK_ORDER=[0,1,2,3,4,5];
+  function deerWalkImg(d){
+    const set=DWALK[(d.face<0)?'L':'R'];
+    const spd=Math.hypot(d.vx,d.vy),dist=d.dist||0;
+    let idx;
+    if(spd>0.075)      idx=WALK_ORDER[Math.floor(dist/0.18)%6];   // run: quicker cadence, same 6 frames
+    else if(spd>0.006) idx=WALK_ORDER[Math.floor(dist/0.34)%6];   // walk
+    else               idx=0;                                     // idle / working: standing contact pose (bespoke poses deferred)
+    return set[idx]||set[0];
   }
   let W=0,H=0,DPR=1,panX=0,panY=0,zoom=1;
   let GW=22,GH=22;const TW=66,TH=33;
@@ -499,11 +516,12 @@
     if(!d.held&&!reduceMotion){if(spd>0.006){const ph=(d.dist||0)*(Math.PI/0.48)+per;hop=Math.abs(Math.sin(ph))*(1.9+((d.tone+12)%5)*0.22);const q=Math.cos(ph*2);sqx=1+q*0.035;sqy=1-q*0.035;}
       else hop=Math.sin(t*2.1+per)*0.6+0.6;}
     ctx.fillStyle='rgba(50,70,35,.22)';ctx.beginPath();ctx.ellipse(s.x,s.y,12,5,0,0,6.28);ctx.fill();
-    const img=deerFrame(d)||DIMG.idle;
+    const img=deerWalkImg(d);
     ctx.save();ctx.globalAlpha=hl?0.3:1;
-    if(img&&img.complete&&img.naturalHeight){const H=58*(d.held?1.14:1),W=H*img.naturalWidth/img.naturalHeight;
-      ctx.translate(s.x,s.y-d.lift+hl-hop+2);ctx.scale(d.face<0?-sqx:sqx,sqy);
-      ctx.drawImage(img,-W/2,-H,W,H);
+    if(img&&img.complete&&img.naturalHeight){const H=59*(d.held?1.14:1),W=H*img.naturalWidth/img.naturalHeight;
+      // frames are pre-authored per direction — apply squash magnitude only, anchor on the ground line (pivot 128,228)
+      ctx.translate(s.x,s.y-d.lift+hl-hop+2);ctx.scale(sqx,sqy);
+      ctx.drawImage(img,-W/2,-H*DWALK_GROUND,W,H);
     }else{ctx.fillStyle='#c98b4a';ctx.beginPath();ctx.arc(s.x,s.y-16,8,0,6.28);ctx.fill();}
     ctx.restore();
     if(d.seen>0){ctx.fillStyle='#e8887f';ctx.font='bold 16px serif';ctx.textAlign='center';ctx.fillText('!',s.x,s.y-d.lift-54);}
