@@ -20,14 +20,14 @@
   .zoom button{width:40px;height:40px;border:0;border-radius:12px;background:rgba(255,255,255,.85);font-size:22px;font-weight:800;color:#5c4f3a;box-shadow:0 2px 8px rgba(80,70,40,.2);}
   .lever{position:fixed;left:calc(12px + env(safe-area-inset-left));bottom:calc(16px + env(safe-area-inset-bottom));border:0;border-radius:14px;padding:11px 15px;font-size:14px;font-weight:800;color:#fff;background:#7b5bd6;box-shadow:0 3px 12px rgba(80,60,140,.35);}
   .hint{position:fixed;left:50%;bottom:20px;transform:translateX(-50%);max-width:92vw;text-align:center;background:rgba(255,255,255,.85);color:#5c4f3a;padding:8px 14px;border-radius:999px;font-size:12.5px;font-weight:600;transition:opacity .8s;pointer-events:none;box-shadow:0 3px 12px rgba(80,70,40,.18);}
-  .warn{position:fixed;left:50%;top:14%;transform:translateX(-50%);background:rgba(232,136,127,.95);color:#fff;font-weight:800;padding:9px 18px;border-radius:12px;font-size:15px;opacity:0;transition:opacity .3s;pointer-events:none;box-shadow:0 6px 20px rgba(0,0,0,.25);}
+  .warn{position:fixed;left:50%;top:14%;transform:translateX(-50%);background:rgba(176,70,59,.95);color:#fff;font-weight:800;padding:9px 18px;border-radius:12px;font-size:15px;opacity:0;transition:opacity .3s;pointer-events:none;box-shadow:0 6px 20px rgba(0,0,0,.25);}
   #setup{position:fixed;inset:0;display:grid;place-items:center;background:rgba(40,34,26,.82);z-index:5;overflow:auto;}
   .card{background:#fffdf6;max-width:380px;width:92%;margin:18px;padding:20px;border-radius:18px;box-shadow:0 12px 40px rgba(0,0,0,.4);}
-  .card h2{margin:0 0 4px;font-size:22px;} .card .sub{color:#8a7a5c;font-size:13px;margin-bottom:14px;font-weight:600;}
+  .card h2{margin:0 0 4px;font-size:22px;} .card .sub{color:#6d5d40;font-size:13px;margin-bottom:14px;font-weight:600;}
   .card .story{font-size:13px;color:#5c4f3a;font-style:italic;margin-bottom:14px;line-height:1.4;}
   .row{margin:10px 0;} .row .lab{font-size:12px;font-weight:800;color:#5c4f3a;margin-bottom:5px;}
   .opts{display:flex;gap:6px;flex-wrap:wrap;} .opts button{flex:1;min-width:60px;border:2px solid #e5dcc4;background:#f5efe0;color:#5c4f3a;border-radius:10px;padding:8px 6px;font-size:12px;font-weight:700;}
-  .opts button.on{background:#7cc36b;border-color:#5a9847;color:#fff;}
+  .opts button.on{background:#7cc36b;border-color:#4d8a3b;color:#223018;}
   .begin{margin-top:16px;width:100%;border:0;border-radius:12px;background:#7b5bd6;color:#fff;font-size:16px;font-weight:800;padding:13px;box-shadow:0 3px 12px rgba(80,60,140,.35);}
 </style>
 </head>
@@ -40,29 +40,29 @@
 <button class="lever" id="lever">🕳️ Go to Ground</button>
 <button class="lever" id="rally" style="left:12px;bottom:70px;background:#e0913c;display:none;">📣 Rally</button>
 <button class="lever" id="rise" style="left:50%;bottom:70px;transform:translateX(-50%);background:#b5484a;display:none;">🔥 Call the Uprising</button>
-<button class="lever" id="deco" style="left:12px;bottom:124px;background:#5aa06a;">🎨 Decorate</button>
-<button class="lever" id="build" style="left:12px;bottom:178px;background:#c9843a;">🔨 Build</button>
+<button class="lever" id="deco" style="left:12px;bottom:124px;background:#3a7d49;">🎨 Decorate</button>
+<button class="lever" id="build" style="left:12px;bottom:178px;background:#9f6018;">🔨 Build</button>
 <button class="lever" id="roster" style="left:12px;bottom:232px;background:#5b8fd6;">🦌 Deer</button>
 <div id="tray" style="display:none;position:fixed;left:0;right:0;bottom:0;background:rgba(255,253,246,.97);padding:7px 6px;overflow-x:auto;white-space:nowrap;box-shadow:0 -3px 14px rgba(80,70,40,.22);z-index:4;"></div>
 <div id="btray" style="display:none;position:fixed;left:0;right:0;bottom:0;background:rgba(255,251,240,.98);padding:7px 6px;overflow-x:auto;white-space:nowrap;box-shadow:0 -3px 14px rgba(80,70,40,.22);z-index:4;"></div>
 <div id="rpanel" style="display:none;position:fixed;inset:0;background:rgba(40,34,26,.72);z-index:6;overflow:auto;padding:14px;"></div>
 <div class="warn" id="warn"></div>
-<div id="end" style="display:none;position:fixed;inset:0;place-items:center;background:rgba(40,34,26,.86);z-index:6;"><div class="card" style="text-align:center;"><h2 style="font-size:26px;">🌿</h2><p style="font-size:14px;color:#5c4f3a;line-height:1.55;margin:6px 0 4px;"></p><button class="begin" id="keepBtn">Keep building →</button><button class="begin" id="newBtn" style="background:#8a7a5c;margin-top:8px;">New colony</button><div style="margin-top:12px;font-size:10px;line-height:1.5;color:#8a7a5c;opacity:.85;">Sound effects &amp; music by <a href="https://kenney.nl" target="_blank" rel="noopener" style="color:#7b6a4c;">Kenney</a> — <a href="https://creativecommons.org/publicdomain/zero/1.0/" target="_blank" rel="noopener" style="color:#7b6a4c;">CC0</a>. Art original to this project. See CREDITS.md.</div></div></div>
+<div id="end" style="display:none;position:fixed;inset:0;place-items:center;background:rgba(40,34,26,.86);z-index:6;"><div class="card" style="text-align:center;"><h2 style="font-size:26px;">🌿</h2><p style="font-size:14px;color:#5c4f3a;line-height:1.55;margin:6px 0 4px;"></p><button class="begin" id="keepBtn">Keep building →</button><button class="begin" id="newBtn" style="background:#6d5d40;margin-top:8px;">New colony</button><div style="margin-top:12px;font-size:10px;line-height:1.5;color:#6d5d40;opacity:.85;">Sound effects &amp; music by <a href="https://kenney.nl" target="_blank" rel="noopener" style="color:#7b6a4c;">Kenney</a> — <a href="https://creativecommons.org/publicdomain/zero/1.0/" target="_blank" rel="noopener" style="color:#7b6a4c;">CC0</a>. Art original to this project. See CREDITS.md.</div></div></div>
 <div class="hint" id="hint">Drag a deer onto a 🫐bush / 🪨rock to hand-gather · TAP a build site to build · assign deer to a Mine/Farm for way more output · 🪵chop logs → 🪵Lumber Mill=🟫lumber · Stone Mason=🧱bricks → build the 🔧 Master Lever</div>
 <div id="setup"><div class="card">
   <h2>🦌 Deer Colony</h2><div class="sub">Set up your world</div>
-  <button class="begin" id="continueBtn" style="display:none;background:#5aa06a;margin:2px 0 12px;">▶ Continue Colony</button>
+  <button class="begin" id="continueBtn" style="display:none;background:#3a7d49;margin:2px 0 12px;">▶ Continue Colony</button>
   <div class="story">Fed up with the humans, a few deer slipped into the woods to build a colony of their own…</div>
   <div class="row"><div class="lab">MAP SIZE</div><div class="opts" data-k="size"><button data-v="small">Small</button><button data-v="med" class="on">Medium</button><button data-v="large">Large</button></div></div>
   <div class="row"><div class="lab">RESOURCES</div><div class="opts" data-k="scar"><button data-v="sparse">Sparse</button><button data-v="normal" class="on">Normal</button><button data-v="rich">Rich</button></div></div>
   <div class="row"><div class="lab">HUMAN FREQUENCY</div><div class="opts" data-k="hum"><button data-v="rare">Rare</button><button data-v="normal" class="on">Normal</button><button data-v="frequent">Frequent</button></div></div>
   <div class="row"><div class="lab">STARTING DEER</div><div class="opts" data-k="deer"><button data-v="1">1</button><button data-v="2" class="on">2</button><button data-v="3">3</button></div></div>
   <button class="begin" id="begin">Begin the colony →</button>
-  <div class="credits" style="margin-top:12px;font-size:10px;line-height:1.5;color:#8a7a5c;opacity:.85;">Sound effects &amp; music by <a href="https://kenney.nl" target="_blank" rel="noopener" style="color:#7b6a4c;">Kenney</a> — <a href="https://creativecommons.org/publicdomain/zero/1.0/" target="_blank" rel="noopener" style="color:#7b6a4c;">CC0</a>. Art original to this project. See CREDITS.md.</div>
+  <div class="credits" style="margin-top:12px;font-size:10px;line-height:1.5;color:#6d5d40;opacity:.85;">Sound effects &amp; music by <a href="https://kenney.nl" target="_blank" rel="noopener" style="color:#7b6a4c;">Kenney</a> — <a href="https://creativecommons.org/publicdomain/zero/1.0/" target="_blank" rel="noopener" style="color:#7b6a4c;">CC0</a>. Art original to this project. See CREDITS.md.</div>
 </div></div>
 <script>
 (() => {
-  const BUILD_VERSION = "v2.8";   // ship-it verify anchor — bump every build
+  const BUILD_VERSION = "v2.9";   // ship-it verify anchor — bump every build
   try{console.log('No Civ, Just Deer '+BUILD_VERSION);
     const _cr=document.querySelector('.credits');if(_cr)_cr.insertAdjacentHTML('beforeend',' <span style="opacity:.7;">· '+BUILD_VERSION+'</span>');}catch(e){}
   const cv=document.getElementById('stage'),ctx=cv.getContext('2d');
@@ -78,6 +78,7 @@
   ['grass','darkgrass','tilled','dirt','stone','water'].forEach(n=>{const im=new Image();im.onload=()=>imgLoaded++;im.src='assets/terrain/'+n+'.png';TIMG[n]=im;});
   // --- audio (Kenney CC0) ---
   const AUD={};let muted=false;const _sfxT={};
+  let reduceMotion=false;try{reduceMotion=!!(window.matchMedia&&matchMedia('(prefers-reduced-motion: reduce)').matches);}catch(e){}
   ['click','confirm','gather','place','alert','uprising','win'].forEach(n=>{const a=new Audio('assets/audio/'+n+'.ogg');a.preload='auto';AUD[n]=a;});
   function sfx(n,vol){if(muted)return;const a=AUD[n];if(!a)return;const now=performance.now();if(now-(_sfxT[n]||0)<90)return;_sfxT[n]=now;try{const c=a.cloneNode();c.volume=vol!=null?vol:((n==='uprising'||n==='win')?0.5:0.35);c.play().catch(()=>{});}catch(e){}}
   function drawBld(name,cx,cy,H,alpha){const im=BIMG[name];if(!im||!im.complete||!im.naturalHeight)return false;const W=H*im.naturalWidth/im.naturalHeight;const pa=ctx.globalAlpha;ctx.globalAlpha=alpha;ctx.drawImage(im,cx-W/2,cy-H,W,H);ctx.globalAlpha=pa;return true;}
@@ -171,7 +172,7 @@
     center();
   }
 
-  const parts=[];const pop=(x,y,t)=>parts.push({x,y,vx:rand(-.4,.4),vy:rand(-.8,-.3),life:1,t});
+  const parts=[];const pop=(x,y,t)=>parts.push({x,y,vx:reduceMotion?0:rand(-.4,.4),vy:reduceMotion?-0.12:rand(-.8,-.3),life:1,t});
   // day/night + human warnings
   let time=0.2;const DAYLEN=120;const isDay=()=>time>0.12&&time<0.62;
   let human=null,phase='none',phaseT=0,warnDir='';
@@ -204,16 +205,16 @@
   const _tray=document.getElementById('tray');
   function markSel(){_tray.querySelectorAll('.tb').forEach(b=>b.style.outline=(b.dataset.t===placeSel)?'3px solid #7b5bd6':'none');}
   function buildTray(){let h='';const bs='display:inline-block;margin:2px;padding:5px 7px;border:2px solid #e5dcc4;border-radius:10px;background:#f5efe0;font-size:11px;font-weight:700;color:#5c4f3a;min-width:60px;text-align:center;line-height:1.25;';
-    for(const d of DECOS){const cost=(d.cF?d.cF+'🫐':'')+(d.cS?d.cS+'🪨':'')+(d.cL?d.cL+'🟫':'');h+='<button data-t="'+d.t+'" class="tb" style="'+bs+'">'+d.ic+'<br>'+d.name+(cost?'<br><span style="color:#8a7a5c;font-size:9px;">'+cost+'</span>':(d.fn?'':'<br><span style="color:#8a7a5c;font-size:9px;">free</span>'))+'</button>';}
+    for(const d of DECOS){const cost=(d.cF?d.cF+'🫐':'')+(d.cS?d.cS+'🪨':'')+(d.cL?d.cL+'🟫':'');h+='<button data-t="'+d.t+'" class="tb" style="'+bs+'">'+d.ic+'<br>'+d.name+(cost?'<br><span style="color:#6d5d40;font-size:9px;">'+cost+'</span>':(d.fn?'':'<br><span style="color:#6d5d40;font-size:9px;">free</span>'))+'</button>';}
     h+='<button data-t="remove" class="tb" style="'+bs+'background:#f3d6d3;">🗑<br>Remove</button>';_tray.innerHTML=h;
     _tray.querySelectorAll('.tb').forEach(b=>b.onclick=()=>{placeSel=b.dataset.t;markSel();});}
-  function closeBuild(){bmode=false;buildSel=null;_btray.style.display='none';const bb=document.getElementById('build');bb.textContent='🔨 Build';bb.style.background='#c9843a';}
-  document.getElementById('deco').onclick=()=>{if(!started)return;decorating=!decorating;const btn=document.getElementById('deco');if(decorating){closeBuild();if(!_tray.dataset.built){buildTray();_tray.dataset.built='1';}}_tray.style.display=decorating?'block':'none';btn.textContent=decorating?'✖ Close Decorate':'🎨 Decorate';btn.style.background=decorating?'#b5484a':'#5aa06a';if(!decorating)placeSel=null;else if(!placeSel){placeSel='statue';markSel();}};
+  function closeBuild(){bmode=false;buildSel=null;_btray.style.display='none';const bb=document.getElementById('build');bb.textContent='🔨 Build';bb.style.background='#9f6018';}
+  document.getElementById('deco').onclick=()=>{if(!started)return;decorating=!decorating;const btn=document.getElementById('deco');if(decorating){closeBuild();if(!_tray.dataset.built){buildTray();_tray.dataset.built='1';}}_tray.style.display=decorating?'block':'none';btn.textContent=decorating?'✖ Close Decorate':'🎨 Decorate';btn.style.background=decorating?'#b5484a':'#3a7d49';if(!decorating)placeSel=null;else if(!placeSel){placeSel='statue';markSel();}};
   // ---- build mode (player-placed buildings) ----
   const _btray=document.getElementById('btray');
   function markBSel(){_btray.querySelectorAll('.tb').forEach(b=>b.style.outline=(b.dataset.t===buildSel)?'3px solid #7b5bd6':'none');}
   function bldTray(){let h='';const bs='display:inline-block;margin:2px;padding:5px 7px;border:2px solid #e5dcc4;border-radius:10px;background:#f5efe0;font-size:11px;font-weight:700;color:#5c4f3a;min-width:66px;text-align:center;line-height:1.25;';
-    for(const [t,label] of BLIST){if((t==='warren'||t==='watchtower'||t==='tunnels')&&!unlocked[t])continue;const c=BCOST[t];const cost=(c.cF?c.cF+'🫐 ':'')+(c.cS?c.cS+'🪨 ':'')+(c.cL?c.cL+'🟫 ':'')+(c.cB?c.cB+'🧱':'');h+='<button data-t="'+t+'" class="tb" style="'+bs+'">'+label+'<br><span style="color:#8a7a5c;font-size:9px;">'+cost+'</span></button>';}
+    for(const [t,label] of BLIST){if((t==='warren'||t==='watchtower'||t==='tunnels')&&!unlocked[t])continue;const c=BCOST[t];const cost=(c.cF?c.cF+'🫐 ':'')+(c.cS?c.cS+'🪨 ':'')+(c.cL?c.cL+'🟫 ':'')+(c.cB?c.cB+'🧱':'');h+='<button data-t="'+t+'" class="tb" style="'+bs+'">'+label+'<br><span style="color:#6d5d40;font-size:9px;">'+cost+'</span></button>';}
     _btray.innerHTML=h;_btray.querySelectorAll('.tb').forEach(b=>b.onclick=()=>{buildSel=b.dataset.t;markBSel();});}
   function placeBuilding(){if(!buildSel)return;const w=S2W(ptr.x,ptr.y),g=unIso(w.x,w.y),gx=Math.round(g.gx),gy=Math.round(g.gy);
     if(gx<0||gy<0||gx>=GW||gy>=GH)return;
@@ -222,7 +223,7 @@
     const occ=structs.some(o=>Math.round(o.gx)===gx&&Math.round(o.gy)===gy)||sites.some(o=>Math.round(o.gx)===gx&&Math.round(o.gy)===gy)||(leverBuilt&&leverPos&&Math.round(leverPos.gx)===gx&&Math.round(leverPos.gy)===gy);
     if(occ){showWarn('That spot is taken');return;}
     const s=Object.assign({type:buildSel,gx,gy,ghost:true,prog:0,building:false},BCOST[buildSel]);sites.push(s);tryBuild(s);if(!s.building)sites.pop();else sfx('place');}
-  document.getElementById('build').onclick=()=>{if(!started)return;bmode=!bmode;const btn=document.getElementById('build');if(bmode){decorating=false;_tray.style.display='none';document.getElementById('deco').textContent='🎨 Decorate';document.getElementById('deco').style.background='#5aa06a';placeSel=null;bldTray();}_btray.style.display=bmode?'block':'none';btn.textContent=bmode?'✖ Close Build':'🔨 Build';btn.style.background=bmode?'#b5484a':'#c9843a';if(!bmode)buildSel=null;else if(!buildSel){buildSel='farm';markBSel();}};
+  document.getElementById('build').onclick=()=>{if(!started)return;bmode=!bmode;const btn=document.getElementById('build');if(bmode){decorating=false;_tray.style.display='none';document.getElementById('deco').textContent='🎨 Decorate';document.getElementById('deco').style.background='#3a7d49';placeSel=null;bldTray();}_btray.style.display=bmode?'block':'none';btn.textContent=bmode?'✖ Close Build':'🔨 Build';btn.style.background=bmode?'#b5484a':'#9f6018';if(!bmode)buildSel=null;else if(!buildSel){buildSel='farm';markBSel();}};
   // ---- deer roster ----
   const JOBLBL={forage:'Foraging 🫐',mine:'Mining 🪨',chop:'Chopping 🪵',farm:'Farming 🌾',lumber:'Milling 🟫',mason:'Masoning 🧱'};
   function deerJob(d){if(!d.target||!d.slot)return'Idle 💤';const o=d.target.obj;return JOBLBL[o.k||o.type]||'Working';}
@@ -233,8 +234,8 @@
     if(!obj){showWarn('No open '+job+' spot — gather node or build one');return;}
     const slot=obj.slots.find(sl=>!sl.taken);slot.taken=d;d.slot=slot;d.target={type:kind,obj};d.atWork=0;d.auto=false;firstAssign=true;}
   const _rp=document.getElementById('rpanel');
-  function buildRoster(){let h='<div style="max-width:520px;margin:0 auto;background:#fffdf6;border-radius:16px;padding:14px;box-shadow:0 10px 40px rgba(0,0,0,.4);"><div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:6px;"><b style="font-size:18px;color:#5c4f3a;">🦌 The Herd ('+herd.length+')</b><button id="rclose" style="border:0;background:#e8887f;color:#fff;font-weight:800;border-radius:10px;padding:6px 14px;">Done</button></div><div style="font-size:11px;color:#8a7a5c;margin-bottom:6px;">Tap a job to reassign a deer.</div>';
-    herd.forEach((d,i)=>{const lv=['','✦','✦✦'][d.lvl]||'';h+='<div style="display:flex;align-items:center;gap:5px;padding:6px 2px;border-top:1px solid #efe7d4;flex-wrap:wrap;"><b style="min-width:54px;color:#5c4f3a;font-size:13px;">'+d.name+'</b><span style="font-size:11px;color:#e0913c;min-width:22px;">'+lv+'</span><span style="flex:1;font-size:12px;color:#8a7a5c;min-width:80px;">'+deerJob(d)+'</span>';
+  function buildRoster(){let h='<div style="max-width:520px;margin:0 auto;background:#fffdf6;border-radius:16px;padding:14px;box-shadow:0 10px 40px rgba(0,0,0,.4);"><div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:6px;"><b style="font-size:18px;color:#5c4f3a;">🦌 The Herd ('+herd.length+')</b><button id="rclose" style="border:0;background:#e8887f;color:#fff;font-weight:800;border-radius:10px;padding:6px 14px;">Done</button></div><div style="font-size:11px;color:#6d5d40;margin-bottom:6px;">Tap a job to reassign a deer.</div>';
+    herd.forEach((d,i)=>{const lv=['','✦','✦✦'][d.lvl]||'';h+='<div style="display:flex;align-items:center;gap:5px;padding:6px 2px;border-top:1px solid #efe7d4;flex-wrap:wrap;"><b style="min-width:54px;color:#5c4f3a;font-size:13px;">'+d.name+'</b><span style="font-size:11px;color:#e0913c;min-width:22px;">'+lv+'</span><span style="flex:1;font-size:12px;color:#6d5d40;min-width:80px;">'+deerJob(d)+'</span>';
       for(const [j,ic] of [['forage','🫐'],['mine','🪨'],['chop','🪵'],['idle','💤']]){h+='<button data-i="'+i+'" data-j="'+j+'" class="rjob" style="border:1px solid #e5dcc4;background:#f5efe0;border-radius:8px;padding:4px 8px;font-size:14px;">'+ic+'</button>';}
       h+='</div>';});
     h+='</div>';_rp.innerHTML=h;
@@ -292,7 +293,7 @@
   function failUprising(){uprising=null;readiness=0.8;suspicion=0.3;wariness=1;document.getElementById('rise').style.display='block';showWarn('💨 Scattered! The deer regroup — rally and try again.');}
   function showEnd(title,body){const e=document.getElementById('end');e.querySelector('h2').textContent=title;e.querySelector('p').textContent=body;e.style.display='grid';}
   function drawTech(st){const s=iso(st.gx,st.gy);ctx.fillStyle='rgba(50,70,35,.25)';ctx.beginPath();ctx.ellipse(s.x,s.y,24,10,0,0,6.28);ctx.fill();if(drawBld(BLD_OF[st.type],s.x,s.y+hideLift,66,hidden?0.32:1))return;ctx.save();ctx.globalAlpha=hidden?0.35:1;ctx.translate(s.x,s.y+hideLift);
-    const col={warren:'#b98a56',watchtower:'#8a7a5c',tunnels:'#6a5a44'}[st.type];
+    const col={warren:'#b98a56',watchtower:'#6d5d40',tunnels:'#6a5a44'}[st.type];
     ctx.fillStyle=col;ctx.beginPath();ctx.moveTo(0,-6);ctx.lineTo(26,8);ctx.lineTo(0,22);ctx.lineTo(-26,8);ctx.closePath();ctx.fill();
     if(st.type==='watchtower'){ctx.fillStyle='#6b5a3e';ctx.fillRect(-4,-30,8,26);ctx.fillStyle='#9a8a5c';ctx.fillRect(-11,-34,22,8);}
     else if(st.type==='warren'){ctx.fillStyle='#8a6a44';ctx.beginPath();ctx.arc(0,-4,13,Math.PI,0);ctx.fill();ctx.fillStyle='#3a2f26';ctx.beginPath();ctx.ellipse(0,-3,5,6,0,0,6.28);ctx.fill();}
@@ -307,7 +308,7 @@
       if(d.target&&d.slot){const kind=d.target.type,arr=kind==='raw'?raws:structs,idx=arr.indexOf(d.target.obj);const slotIdx=idx>=0?d.target.obj.slots.indexOf(d.slot):-1;o.tgt=(idx>=0&&slotIdx>=0)?{kind,idx,slotIdx}:null;}else o.tgt=null;
       return o;});
     return {v:1,GW,GH,patrolMult,water:[...water],bridges:[...bridges],flora,coverPts,raws:stripSlots(raws),sites,structs:stripSlots(structs),herd:deer,decos,res:Object.assign({},res),
-      readiness,suspicion,wariness,hidden,leverBuilt,leverPos,firstAssign,milestoneIdx,unlocked,watchtowerBuilt,tunnelsBuilt,xpOn,rallyReady,rallyActive,rallyCd,uprisingReady,liberated,happiness,autoAnnounced,elapsed,time,warrenTimer,muted,cfg:Object.assign({},cfg)};
+      readiness,suspicion,wariness,hidden,leverBuilt,leverPos,firstAssign,milestoneIdx,unlocked,watchtowerBuilt,tunnelsBuilt,xpOn,rallyReady,rallyActive,rallyCd,uprisingReady,liberated,happiness,autoAnnounced,elapsed,time,warrenTimer,muted,reduceMotion,cfg:Object.assign({},cfg)};
   }
   function saveGame(){if(!started||won)return;try{localStorage.setItem(SAVE_KEY,JSON.stringify(serialize()));}catch(e){}}
   function hasSave(){try{return !!localStorage.getItem(SAVE_KEY);}catch(e){return false;}}
@@ -324,7 +325,7 @@
       readiness=s.readiness||0;suspicion=s.suspicion||0;wariness=s.wariness||0;hidden=!!s.hidden;leverBuilt=!!s.leverBuilt;leverPos=s.leverPos||null;firstAssign=!!s.firstAssign;
       milestoneIdx=s.milestoneIdx||0;unlocked=Object.assign({warren:false,watchtower:false,tunnels:false},s.unlocked||{});
       watchtowerBuilt=!!s.watchtowerBuilt;tunnelsBuilt=!!s.tunnelsBuilt;xpOn=!!s.xpOn;rallyReady=!!s.rallyReady;rallyActive=s.rallyActive||0;rallyCd=s.rallyCd||0;uprisingReady=!!s.uprisingReady;liberated=!!s.liberated;
-      elapsed=s.elapsed||0;time=s.time||0.2;warrenTimer=s.warrenTimer||0;happiness=s.happiness||0.35;autoAnnounced=!!s.autoAnnounced;muted=!!s.muted;won=false;uprising=null;
+      elapsed=s.elapsed||0;time=s.time||0.2;warrenTimer=s.warrenTimer||0;happiness=s.happiness||0.35;autoAnnounced=!!s.autoAnnounced;muted=!!s.muted;if('reduceMotion' in s)reduceMotion=!!s.reduceMotion;won=false;uprising=null;
       Object.assign(cfg,s.cfg||{});
       herd=(s.herd||[]).map(o=>{const d=Object.assign({},o);d.held=false;d.target=null;d.slot=null;d.auto=false;return d;});
       (s.herd||[]).forEach((o,i)=>{if(o.tgt){const arr=o.tgt.kind==='raw'?raws:structs,obj=arr[o.tgt.idx];if(obj&&obj.slots&&obj.slots[o.tgt.slotIdx]){const d=herd[i];d.target={type:o.tgt.kind,obj};d.slot=obj.slots[o.tgt.slotIdx];d.slot.taken=d;}}});
@@ -404,7 +405,7 @@
   const CORN=[[0,-TH/2],[TW/2,0],[0,TH/2],[-TW/2,0]];// T,R,B,L
   function drawShore(gx,gy,cx,cy,now){
     const edges=[[landN(gx,gy-1),0,1],[landN(gx+1,gy),1,2],[landN(gx,gy+1),2,3],[landN(gx-1,gy),3,0]];
-    const foam=0.28+0.30*Math.max(0,Math.sin(now/430+(gx*1.3+gy*0.7)));
+    const foam=reduceMotion?0.32:0.28+0.30*Math.max(0,Math.sin(now/430+(gx*1.3+gy*0.7)));
     for(const[isL,a,b]of edges){if(!isL)continue;
       const A=CORN[a],B=CORN[b],k=0.46,A2=[A[0]*(1-k),A[1]*(1-k)],B2=[B[0]*(1-k),B[1]*(1-k)];
       const mx=cx+(A[0]+B[0])/2,my=cy+(A[1]+B[1])/2,ix=cx+(A2[0]+B2[0])/2,iy=cy+(A2[1]+B2[1])/2;
@@ -474,7 +475,7 @@
     const hl=(hidden&&d.target&&d.target.type==='struct')?hideLift:0;
     // procedural, per-deer varied motion (no dust frames)
     const t=performance.now()/1000,per=d.bob||0;let hop=0,sqx=1,sqy=1;
-    if(!d.held){if(spd>0.006){const ph=(d.dist||0)*(Math.PI/0.30)+per;hop=Math.abs(Math.sin(ph))*(3.4+((d.tone+12)%5)*0.4);const q=Math.cos(ph*2);sqx=1+q*0.055;sqy=1-q*0.055;}
+    if(!d.held&&!reduceMotion){if(spd>0.006){const ph=(d.dist||0)*(Math.PI/0.30)+per;hop=Math.abs(Math.sin(ph))*(3.4+((d.tone+12)%5)*0.4);const q=Math.cos(ph*2);sqx=1+q*0.055;sqy=1-q*0.055;}
       else hop=Math.sin(t*2.1+per)*0.6+0.6;}
     ctx.fillStyle='rgba(50,70,35,.22)';ctx.beginPath();ctx.ellipse(s.x,s.y,12,5,0,0,6.28);ctx.fill();
     const img=deerFrame(d)||DIMG.idle;
@@ -498,7 +499,7 @@
     else{ctx.save();ctx.translate(s.x,s.y-16);ctx.fillStyle='#5c6b3f';ctx.fillRect(-5,-8,10,18);ctx.fillStyle='#e9c79a';ctx.beginPath();ctx.arc(0,-12,5,0,6.28);ctx.fill();ctx.fillStyle='#3f4a2a';ctx.fillRect(-7,-16,14,3);ctx.restore();}
     if(human.camping){ctx.font='13px serif';ctx.textAlign='center';ctx.fillText('🏕',s.x,s.y-66);}}
   function edgeArrow(){if(phase==='none'||!started)return;let dir;if(phase==='warning')dir=DIRS[warnDir];else if(human)dir=[human.dirx,human.diry];else return;
-    const wv=iso(dir[0]||0,dir[1]||0);const a=Math.atan2(wv.y,wv.x);const r=Math.min(W,H)*0.38,ax=W/2+Math.cos(a)*r,ay=H/2+Math.sin(a)*r,pulse=0.6+0.4*Math.sin(performance.now()/200);
+    const wv=iso(dir[0]||0,dir[1]||0);const a=Math.atan2(wv.y,wv.x);const r=Math.min(W,H)*0.38,ax=W/2+Math.cos(a)*r,ay=H/2+Math.sin(a)*r,pulse=reduceMotion?0.95:0.6+0.4*Math.sin(performance.now()/200);
     ctx.save();ctx.translate(ax,ay);ctx.rotate(a);ctx.fillStyle='rgba(232,136,127,'+pulse+')';ctx.beginPath();ctx.moveTo(18,0);ctx.lineTo(-10,-12);ctx.lineTo(-4,0);ctx.lineTo(-10,12);ctx.closePath();ctx.fill();ctx.restore();
     ctx.fillStyle='rgba(232,136,127,'+pulse+')';ctx.font='bold 14px serif';ctx.textAlign='center';ctx.fillText('👀',ax,ay-16);}
   function nightTint(){let a=0;const t=time;if(t<0.12||t>0.62){a=t<0.12?lerp(.34,0,t/0.12):lerp(0,.34,(t-0.62)/0.38);}if(a>0){ctx.fillStyle='rgba(0,20,60,'+a+')';ctx.fillRect(0,0,W,H);}}
@@ -527,10 +528,16 @@
   document.addEventListener('visibilitychange',()=>{if(document.hidden)saveGame();});
   // audio UI: play a click on any button press (also unlocks audio on first gesture), + mute toggle
   addEventListener('pointerdown',e=>{if(e.target&&e.target.closest&&e.target.closest('button'))sfx('click');},true);
-  (function(){const mb=document.createElement('button');mb.id='muteBtn';mb.setAttribute('aria-label','Mute');mb.textContent='🔊';
-    mb.style.cssText='position:fixed;top:calc(52px + env(safe-area-inset-top));left:10px;z-index:60;width:38px;height:38px;border-radius:10px;border:none;background:rgba(255,255,255,.82);font-size:18px;cursor:pointer;box-shadow:0 2px 6px rgba(0,0,0,.2);';
+  (function(){
+    const bs='position:fixed;left:10px;z-index:60;width:38px;height:38px;border-radius:10px;border:none;background:rgba(255,255,255,.82);font-size:18px;cursor:pointer;box-shadow:0 2px 6px rgba(0,0,0,.2);';
+    const mb=document.createElement('button');mb.id='muteBtn';mb.setAttribute('aria-label','Toggle sound');mb.title='Sound';mb.textContent=muted?'🔇':'🔊';
+    mb.style.cssText=bs+'top:calc(52px + env(safe-area-inset-top));';
     mb.onclick=()=>{muted=!muted;mb.textContent=muted?'🔇':'🔊';};
-    document.body.appendChild(mb);})();
+    document.body.appendChild(mb);
+    const rm=document.createElement('button');rm.id='motionBtn';rm.setAttribute('aria-label','Toggle reduced motion');rm.title='Reduced motion';rm.textContent=reduceMotion?'🐢':'🌀';
+    rm.style.cssText=bs+'top:calc(96px + env(safe-area-inset-top));';
+    rm.onclick=()=>{reduceMotion=!reduceMotion;rm.textContent=reduceMotion?'🐢':'🌀';};
+    document.body.appendChild(rm);})();
   resize();requestAnimationFrame(loop);
 })();
 
