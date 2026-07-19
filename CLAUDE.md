@@ -50,3 +50,10 @@ A cozy woodland **colony-sim with a stealth twist** (deer build a hidden colony;
 
 ## Full design/art docs
 Live in the **Game Builder** claude.ai project (GAME_DESIGN v2.0, ART_ASSET_BRIEF incl. keyer method) and the **no-civ-just-deer** project (`BUILD_AND_SHIP.md`).
+
+## Balance — sim-validated (2026-07-19)
+Monte-Carlo pacing sim (`sim_pacing.py`, 6000 runs) on the readiness economy:
+- **Time-to-Uprising: median 59.5 min** (P10–P90 = 53–68 min); **99.7% land in a 40–80 min band.** The ~1h target is well-tuned — **no rebalance needed** (creator-accepted).
+- Readiness base `K=0.000278/s`; mult `clamp(0.6+0.09·workers,0.6,1.7)` → mult 1.0 (~4.4 working deer) = exactly 60 min. Herd ramps 2→9 (cap), so pace swings 77-min (2 deer) → 42-min (cap).
+- Resource economy: raw gathering (0.4/s/deer) trivially affords core buildings; refined lumber/bricks are the real effort but **off the critical path** to Uprising — no starvation risk.
+- **Locked change:** first milestone lowered **0.10 → 0.06** (first extra deer now ~3.8 min vs 6.3) to fix a reward-sparse opening; negligible effect on the 60-min total. Creator-approved.

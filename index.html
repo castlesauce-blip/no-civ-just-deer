@@ -62,7 +62,7 @@
 </div></div>
 <script>
 (() => {
-  const BUILD_VERSION = "v2.9";   // ship-it verify anchor — bump every build
+  const BUILD_VERSION = "v2.10";   // ship-it verify anchor — bump every build
   try{console.log('No Civ, Just Deer '+BUILD_VERSION);
     const _cr=document.querySelector('.credits');if(_cr)_cr.insertAdjacentHTML('beforeend',' <span style="opacity:.7;">· '+BUILD_VERSION+'</span>');}catch(e){}
   const cv=document.getElementById('stage'),ctx=cv.getContext('2d');
@@ -278,7 +278,7 @@
   function lvlMult(d){return [1,1.35,1.8][d.lvl]||1;}
   function addXP(d,ot){if(!xpOn)return;d.xp++;d.job=ot;const nl=d.xp>=55?2:d.xp>=18?1:0;if(nl>d.lvl){d.lvl=nl;const s=W2S(iso(d.gx,d.gy).x,iso(d.gx,d.gy).y-32);pop(s.x,s.y,'star');showWarn((d.name||'A deer')+' is now '+(nl===2?'an Expert':'Skilled')+'! ✦');}}
   const MILES=[
-    {r:.10,f(){spawnDeer(1);showWarn('🦌 Word spreads — a deer joins the colony!');}},
+    {r:.06,f(){spawnDeer(1);showWarn('🦌 Word spreads — a deer joins the colony!');}},
     {r:.20,f(){unlockSite('warren');showWarn('🏡 Warren unlocked — build it to grow the herd.');}},
     {r:.30,f(){unlockSite('watchtower');showWarn('🔭 Watchtower unlocked — spot humans sooner.');}},
     {r:.40,f(){xpOn=true;showWarn('✨ The herd is learning — deer now gain Experience.');}},
