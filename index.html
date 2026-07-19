@@ -63,7 +63,7 @@
 </div></div>
 <script>
 (() => {
-  const BUILD_VERSION = "v2.12";   // ship-it verify anchor — bump every build
+  const BUILD_VERSION = "v2.13";   // ship-it verify anchor — bump every build
   try{console.log('No Civ, Just Deer '+BUILD_VERSION);
     const _cr=document.querySelector('.credits');if(_cr)_cr.insertAdjacentHTML('beforeend',' <span style="opacity:.7;">· '+BUILD_VERSION+'</span>');}catch(e){}
   const cv=document.getElementById('stage'),ctx=cv.getContext('2d');
@@ -174,6 +174,9 @@
   }
 
   const parts=[];const pop=(x,y,t)=>parts.push({x,y,vx:reduceMotion?0:rand(-.4,.4),vy:reduceMotion?-0.12:rand(-.8,-.3),life:1,t});
+  // juice: screenshake + dust bursts — all reduced-motion guarded (sfx + showWarn are the motion-free twins)
+  let shake=0;const fxShake=(m)=>{if(!reduceMotion&&m>shake)shake=m;};
+  const dust=[];const burst=(x,y,c,n)=>{if(reduceMotion)return;for(let i=0;i<n;i++){const a=rand(0,6.283),sp=rand(.5,2.4);dust.push({x,y,vx:Math.cos(a)*sp,vy:Math.sin(a)*sp-0.7,life:1,r:rand(1.5,3.6),c});}};
   // day/night + human warnings
   let time=0.2;const DAYLEN=120;const isDay=()=>time>0.12&&time<0.62;
   let human=null,phase='none',phaseT=0,warnDir='';
@@ -192,7 +195,7 @@
     tapSite=null;for(const s of sites){if(s.ghost&&!s.building){const sc=W2S(iso(s.gx,s.gy).x,iso(s.gx,s.gy).y-14);if(Math.hypot(sc.x-p.x,sc.y-p.y)<48*zoom){tapSite=s;break;}}}
     mode='pan';startPan={x:panX,y:panY};});
   addEventListener('pointermove',e=>{const p=P(e);if(!p)return;moved+=Math.hypot(p.x-ptr.x,p.y-ptr.y);ptr=p;if(mode==='pan'||mode==='deco'||mode==='build'){panX=startPan.x+(p.x-startPtr.x);panY=startPan.y+(p.y-startPtr.y);}});
-  addEventListener('pointerup',()=>{if(mode==='grab'&&held){held.held=false;assignDrop(held);held=null;}else if(mode==='pan'&&tapSite&&moved<8){tryBuild(tapSite);}else if(mode==='deco'&&moved<8){placeDeco();}else if(mode==='build'&&moved<8){placeBuilding();}mode=null;tapSite=null;});
+  addEventListener('pointerup',()=>{if(mode==='grab'&&held){held.held=false;{const ds=W2S(iso(held.gx,held.gy).x,iso(held.gx,held.gy).y);burst(ds.x,ds.y,'#cdbb96',7);}assignDrop(held);held=null;}else if(mode==='pan'&&tapSite&&moved<8){tryBuild(tapSite);}else if(mode==='deco'&&moved<8){placeDeco();}else if(mode==='build'&&moved<8){placeBuilding();}mode=null;tapSite=null;});
   function placeDeco(){const w=S2W(ptr.x,ptr.y),g=unIso(w.x,w.y),gx=Math.round(g.gx),gy=Math.round(g.gy);
     if(placeSel==='remove'){let bi=-1,bd=1.4;for(let i=0;i<decos.length;i++){const dd=Math.hypot(decos[i].gx-g.gx,decos[i].gy-g.gy);if(dd<bd){bd=dd;bi=i;}}if(bi>=0){const rem=decos[bi];if(rem.t==='bridge')bridges.delete(Math.round(rem.gx)+'_'+Math.round(rem.gy));decos.splice(bi,1);}return;}
     if(!placeSel)return;if(gx<0||gy<0||gx>=GW||gy>=GH)return;
@@ -289,9 +292,9 @@
     {r:1,f(){uprisingReady=true;document.getElementById('rise').style.display='block';showWarn('🔥 Ready! Call the Uprising when you dare.');}},
   ];
   const UPRISE_LEN=42;
-  function startUprising(){uprising={t:UPRISE_LEN};time=0.30;wariness=1;phase='none';human=null;sfx('uprising');showWarn('🔥 THE UPRISING — hold the colony!');document.getElementById('rise').style.display='none';}
-  function winGame(){uprising=null;liberated=true;human=null;phase='none';sfx('win');document.getElementById('rise').style.display='none';saveGame();showEnd('🌿 The forest is ours','The humans have packed up and left for good — the woods are too much trouble now. Your colony is free. Keep tending it as long as you like.');}
-  function failUprising(){uprising=null;readiness=0.8;suspicion=0.3;wariness=1;document.getElementById('rise').style.display='block';showWarn('💨 Scattered! The deer regroup — rally and try again.');}
+  function startUprising(){uprising={t:UPRISE_LEN};time=0.30;wariness=1;phase='none';human=null;sfx('uprising');fxShake(9);burst(W/2,H*0.4,'#ff9a3c',26);showWarn('🔥 THE UPRISING — hold the colony!');document.getElementById('rise').style.display='none';}
+  function winGame(){uprising=null;liberated=true;human=null;phase='none';sfx('win');fxShake(6);burst(W/2,H*0.4,'#7fd08a',30);document.getElementById('rise').style.display='none';saveGame();showEnd('🌿 The forest is ours','The humans have packed up and left for good — the woods are too much trouble now. Your colony is free. Keep tending it as long as you like.');}
+  function failUprising(){uprising=null;readiness=0.8;suspicion=0.3;wariness=1;fxShake(8);document.getElementById('rise').style.display='block';showWarn('💨 Scattered! The deer regroup — rally and try again.');}
   function showEnd(title,body){const e=document.getElementById('end');e.querySelector('h2').textContent=title;e.querySelector('p').textContent=body;e.style.display='grid';}
   function drawTech(st){const s=iso(st.gx,st.gy);ctx.fillStyle='rgba(50,70,35,.25)';ctx.beginPath();ctx.ellipse(s.x,s.y,24,10,0,0,6.28);ctx.fill();if(drawBld(BLD_OF[st.type],s.x,s.y+hideLift,66,hidden?0.32:1))return;ctx.save();ctx.globalAlpha=hidden?0.35:1;ctx.translate(s.x,s.y+hideLift);
     const col={warren:'#b98a56',watchtower:'#6d5d40',tunnels:'#6a5a44'}[st.type];
@@ -363,7 +366,7 @@
     }
     if(!uprising&&!isDay()&&phase==='active'){human=null;phase='none';}
 
-    for(let i=sites.length-1;i>=0;i--){const s=sites[i];if(s.building){s.prog+=dt/(s.type==='lever'?9:4);if(s.prog>=1){sfx('confirm');if(s.type==='lever'){leverBuilt=true;leverPos={gx:s.gx,gy:s.gy};readiness=Math.min(1,readiness+0.03);showWarn('🔧 Master Lever built! Tap Go to Ground when humans near.');}else if(s.type==='warren'||s.type==='watchtower'||s.type==='tunnels'){structs.push({type:s.type,gx:s.gx,gy:s.gy,slots:[]});coverPts.push({gx:s.gx,gy:s.gy});if(s.type==='watchtower')watchtowerBuilt=true;if(s.type==='tunnels')tunnelsBuilt=true;readiness=Math.min(1,readiness+0.01);showWarn(({warren:'🏡 Warren',watchtower:'🔭 Watchtower',tunnels:'🕳️ Tunnels'}[s.type])+' built!');}else{structs.push({type:s.type,gx:s.gx,gy:s.gy,slots:mkSlots()});coverPts.push({gx:s.gx,gy:s.gy});readiness=Math.min(1,readiness+0.006);showWarn(SNAME[s.type]+' built! Assign deer to it.');}sites.splice(i,1);}}}
+    for(let i=sites.length-1;i>=0;i--){const s=sites[i];if(s.building){s.prog+=dt/(s.type==='lever'?9:4);if(s.prog>=1){sfx('confirm');{const bs=W2S(iso(s.gx,s.gy).x,iso(s.gx,s.gy).y-12);burst(bs.x,bs.y,'#d9c7a0',15);for(let k=0;k<6;k++)pop(bs.x+rand(-14,14),bs.y+rand(-8,4),'star');fxShake(3.6);}if(s.type==='lever'){leverBuilt=true;leverPos={gx:s.gx,gy:s.gy};readiness=Math.min(1,readiness+0.03);showWarn('🔧 Master Lever built! Tap Go to Ground when humans near.');}else if(s.type==='warren'||s.type==='watchtower'||s.type==='tunnels'){structs.push({type:s.type,gx:s.gx,gy:s.gy,slots:[]});coverPts.push({gx:s.gx,gy:s.gy});if(s.type==='watchtower')watchtowerBuilt=true;if(s.type==='tunnels')tunnelsBuilt=true;readiness=Math.min(1,readiness+0.01);showWarn(({warren:'🏡 Warren',watchtower:'🔭 Watchtower',tunnels:'🕳️ Tunnels'}[s.type])+' built!');}else{structs.push({type:s.type,gx:s.gx,gy:s.gy,slots:mkSlots()});coverPts.push({gx:s.gx,gy:s.gy});readiness=Math.min(1,readiness+0.006);showWarn(SNAME[s.type]+' built! Assign deer to it.');}sites.splice(i,1);}}}
 
     hideLift=lerp(hideLift,hidden?34:0,0.18);
     for(const d of herd){
@@ -395,10 +398,12 @@
       if(!isWater(ngx,ngy)||isBridge(ngx,ngy)){d.gx=ngx;d.gy=ngy;}else{d.vx*=-0.4;d.vy*=-0.4;}
       if(Math.abs(d.vx)>.004)d.face=(d.vx-d.vy)>0?1:-1;d.bob+=dt*(1+sp*30);d.dist=(d.dist||0)+sp*dt*60;
     }
-    if(suspicion>=1){if(uprising){failUprising();}else{sfx('alert');showWarn('👀 Spotted! Lie low…');suspicion=0.5;readiness=Math.max(0,readiness-0.06);}}
+    if(suspicion>=1){if(uprising){failUprising();}else{sfx('alert');fxShake(7);showWarn('👀 Spotted! Lie low…');suspicion=0.5;readiness=Math.max(0,readiness-0.06);}}
     suspicion=Math.max(0,suspicion-dt*(isDay()?0.03:0.11));wariness=Math.max(0,wariness-dt*0.0015);
     if(warnT>0){warnT-=dt;if(warnT<=0)document.getElementById('warn').style.opacity=0;}
     for(let i=parts.length-1;i>=0;i--){const q=parts[i];q.x+=q.vx*3;q.y+=q.vy*3;q.vy-=.03;q.life-=dt*1.05;if(q.life<=0)parts.splice(i,1);}
+    for(let i=dust.length-1;i>=0;i--){const q=dust[i];q.x+=q.vx*3;q.y+=q.vy*3;q.vy+=0.13;q.life-=dt*1.7;if(q.life<=0)dust.splice(i,1);}
+    if(shake>0)shake=Math.max(0,shake-dt*26);
   }
 
   function diamond(x,y,f){ctx.fillStyle=f;ctx.beginPath();ctx.moveTo(x,y-TH/2);ctx.lineTo(x+TW/2,y);ctx.lineTo(x,y+TH/2);ctx.lineTo(x-TW/2,y);ctx.closePath();ctx.fill();}
@@ -507,7 +512,8 @@
 
   function render(){ctx.clearRect(0,0,W,H);const g=ctx.createLinearGradient(0,0,0,H);g.addColorStop(0,'#cfe6b4');g.addColorStop(1,'#9ec27a');ctx.fillStyle=g;ctx.fillRect(0,0,W,H);
     if(!started){return;}
-    ctx.save();ctx.translate(panX,panY);ctx.scale(zoom,zoom);
+    const shx=shake>0?rand(-shake,shake):0,shy=shake>0?rand(-shake,shake):0;
+    ctx.save();ctx.translate(panX+shx,panY+shy);ctx.scale(zoom,zoom);
     drawGround();
     const ents=[];for(const f of flora)ents.push({e:f,d:f.gx+f.gy,k:'f'});for(const dc of decos)ents.push({e:dc,d:dc.gx+dc.gy,k:'D'});for(const r of raws)ents.push({e:r,d:r.gx+r.gy,k:'r'});for(const s of sites)ents.push({e:s,d:s.gx+s.gy,k:'s'});for(const st of structs)ents.push({e:st,d:st.gx+st.gy,k:'S'});if(leverBuilt&&leverPos)ents.push({e:leverPos,d:leverPos.gx+leverPos.gy,k:'L'});for(const h of herd)ents.push({e:h,d:h.gx+h.gy+(h.held?99:0),k:'d'});if(human&&phase==='active')ents.push({e:human,d:human.gx+human.gy+50,k:'h'});
     ents.sort((a,b)=>a.d-b.d);
@@ -516,6 +522,7 @@
     if(bmode&&buildSel){const w=S2W(ptr.x,ptr.y),g=unIso(w.x,w.y),gx=Math.round(g.gx),gy=Math.round(g.gy);if(gx>=0&&gy>=0&&gx<GW&&gy<GH&&!isWater(gx,gy)){const c=iso(gx,gy);drawBld(BLD_OF[buildSel],c.x,c.y,72,0.5);}}
     ctx.restore();
     for(const q of parts){ctx.globalAlpha=Math.max(0,q.life);ctx.font='13px serif';ctx.textAlign='center';ctx.fillText({heart:'♥',food:'🫐',stone:'🪨',wood:'🪵',lumber:'🟫',bricks:'🧱',star:'✦'}[q.t]||'•',q.x,q.y);}ctx.globalAlpha=1;
+    for(const q of dust){ctx.globalAlpha=Math.max(0,q.life);ctx.fillStyle=q.c;ctx.beginPath();ctx.arc(q.x,q.y,q.r*Math.max(.3,q.life),0,6.283);ctx.fill();}ctx.globalAlpha=1;
     edgeArrow();nightTint();}
 
   const $=id=>document.getElementById(id);let last=performance.now(),hudT=0,saveT=0;
